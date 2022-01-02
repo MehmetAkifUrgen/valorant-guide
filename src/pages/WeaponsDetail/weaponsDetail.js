@@ -13,7 +13,7 @@ import colors from '../../colors/colors';
 import Loading from '../../components/loading/loading';
 import * as Progress from 'react-native-progress';
 import WeaponSkins from '../../components/weaponSkins';
-import VideoPlayer from 'react-native-video-player';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Video from 'react-native-video';
 
@@ -26,9 +26,20 @@ const WeaponsDetail = ({route, navigation}) => {
   const [skinVisible, setSkinVisible] = useState(false);
   const [skin, setSkin] = useState('');
   const [loading, setLoading] = useState(false);
+  const [duration, setDuration] = useState(null);
+  const [progress, setProgress] = useState(null);
 
   if (item.weaponStats == null) {
     return <Loading />;
+  }
+
+  function onLoad(data) {
+    setDuration(data);
+    console.log('position Time: ', duration);
+  }
+  function onProgress(data) {
+    setProgress(data.currentTime);
+    console.log('current Time: ', progress);
   }
 
   function renderItem({item}) {
@@ -54,6 +65,7 @@ const WeaponsDetail = ({route, navigation}) => {
     if (videoPlayer != null) {
       videoPlayer.presentFullscreenPlayer();
     }
+
     return (
       <View style={styles.videoView}>
         <Video
@@ -65,14 +77,14 @@ const WeaponsDetail = ({route, navigation}) => {
             uri: url,
           }}
           onEnd={() => setVisible(!visible)}
-          f
-          onBuffer={() => <Loading />}
-          onLoad={() => <Loading />}
-          onLoadStart={() => setLoading(false)}
+          onProgress={onProgress}
+          onLoadStart={() => setLoading(true)}
+          onLoad={() => setLoading(false)}
           resizeMode="contain"
-          controls
+          load
           id="video"
         />
+        {loading && <Loading />}
 
         <TouchableOpacity
           onPress={() => setVisible(!visible)}
@@ -91,9 +103,6 @@ const WeaponsDetail = ({route, navigation}) => {
         <Image style={styles.fullImage} source={{uri: skin}} />
       </TouchableOpacity>
     );
-  }
-  if (visible && loading) {
-    return <Loading />;
   }
 
   return (
