@@ -6,13 +6,13 @@ export default StyleSheet.create({
     backgroundColor: colors.dark,
     justifyContent: 'center',
     alignItems: 'center',
-    width: value.width * 0.95,
-    margin: 10,
+    margin: 5,
     borderRadius: 20,
+    padding: 10,
   },
   image: {
-    width: value.width * 0.8,
-    height: value.height / 5,
+    width: value.width * 0.4,
+    height: value.height / 10,
     resizeMode: 'contain',
   },
   text: {

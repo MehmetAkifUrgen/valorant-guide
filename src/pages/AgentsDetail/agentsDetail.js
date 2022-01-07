@@ -21,6 +21,13 @@ const AgentsDetail = ({route, navigation}) => {
   function renderItem({item}) {
     return <Abilities item={item} />;
   }
+  function ItemSeparatorComponent() {
+    return (
+      <View style={styles.seperatorView}>
+        <View style={styles.seperator}></View>
+      </View>
+    );
+  }
   const {item} = route.params;
   function ListHeaderComponent() {
     return (
@@ -45,6 +52,7 @@ const AgentsDetail = ({route, navigation}) => {
             ListHeaderComponent={ListHeaderComponent}
             data={item.abilities}
             renderItem={renderItem}
+            ItemSeparatorComponent={ItemSeparatorComponent}
           />
         </>
       )}

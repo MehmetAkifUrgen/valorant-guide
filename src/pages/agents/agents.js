@@ -1,15 +1,23 @@
-import React from 'react';
-import {FlatList, View, ImageBackground} from 'react-native';
+import React, {useState} from 'react';
+import {StatusBar, FlatList, View} from 'react-native';
 import Network from '../../network/network';
 import Item from '../../components/item';
 import styles from './agents.style';
 import Loading from '../../components/loading/loading';
 import Error from '../../components/error/error';
+import colors from '../../colors/colors';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const Agents = ({navigation}) => {
   const {loading, data, error} = Network('agents?language=tr-TR');
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Apple', value: 'apple'},
+    {label: 'Banana', value: 'banana'},
+  ]);
 
-  //console.log(data);
+  console.log(data);
   const renderItem = ({item}) => {
     if (item.role == null) {
       <Loading />;
@@ -31,16 +39,12 @@ const Agents = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={styles.ImageBackground}
-        source={require('../../../assets/valo.jpg')}
-      />
+      <StatusBar backgroundColor={colors.dark} />
       <FlatList
-        initialNumToRender={3}
-        keyExtractor={item => item.uuid}
+        showsVerticalScrollIndicator={false}
         data={data}
         renderItem={renderItem}
-        numColumns={2}
+        numColumns={3}
       />
     </View>
   );

@@ -1,10 +1,11 @@
 import React from 'react';
-import {ImageBackground, View, FlatList} from 'react-native';
+import {View, FlatList, StatusBar} from 'react-native';
 import Network from '../../network/network';
 import Item from '../../components/itemWeapons';
 import styles from './weapons.style';
 import Loading from '../../components/loading/loading';
 import Error from '../../components/error/error';
+import colors from '../../colors/colors';
 
 const Weapons = ({navigation}) => {
   const {loading, data, error} = Network('weapons?language=tr-TR');
@@ -29,11 +30,8 @@ const Weapons = ({navigation}) => {
   }
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={styles.ImageBackground}
-        source={require('../../../assets/valo2.jpg')}
-      />
-      <FlatList data={data} renderItem={renderItem} />
+      <StatusBar backgroundColor={colors.dark} />
+      <FlatList numColumns={2} data={data} renderItem={renderItem} />
     </View>
   );
 };

@@ -6,10 +6,9 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: colors.blue,
   },
-  ImageBackground: {
-    width: window.width,
-    height: window.height,
-    resizeMode: 'cover',
-    position: 'absolute',
+
+  FlatList: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 });

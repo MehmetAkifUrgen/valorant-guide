@@ -8,6 +8,7 @@ export default StyleSheet.create({
     backgroundColor: colors.dark,
     borderRadius: 20,
     marginTop: 20,
+    justifyContent: 'center',
   },
   image: {
     width: window.width * 0.6,
@@ -39,5 +40,7 @@ export default StyleSheet.create({
   },
   body: {
     padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

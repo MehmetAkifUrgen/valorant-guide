@@ -35,4 +35,13 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
+  seperator: {
+    backgroundColor: colors.main,
+    width: window.width * 0.85,
+    height: 2,
+  },
+  seperatorView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

@@ -8,9 +8,4 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  ImageBackground: {
-    width: window.width,
-    height: window.height,
-    position: 'absolute',
-  },
 });

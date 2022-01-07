@@ -8,6 +8,7 @@ import Maps from './src/pages/maps';
 import AgentsDetail from './src/pages/AgentsDetail';
 import WeaponsDetail from './src/pages/WeaponsDetail';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from './src/colors/colors';
 const Tab = createBottomTabNavigator();
 
@@ -15,9 +16,11 @@ function BottomNavigator({navigation}) {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: false,
         tabBarInactiveBackgroundColor: colors.dark,
         tabBarActiveBackgroundColor: colors.main,
+        tabBarAllowFontScaling: true,
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: colors.main,
 
         tabBarStyle: {
           height: 60,
@@ -28,47 +31,61 @@ function BottomNavigator({navigation}) {
         },
         tabBarLabelStyle: {
           fontSize: 14,
-          color: 'white',
         },
       }}>
       <Tab.Screen
         options={{
-          tabBarIcon: () => {
-            return (
-              <Image
-                source={require('./assets/breach.png')}
-                style={styles.image}
-              />
-            );
+          tabBarIcon: ({color}) => {
+            return <Icon name="account" color={color} size={30} />;
           },
+          title: 'Ajanlar',
+          headerStyle: {
+            backgroundColor: colors.dark,
+          },
+          headerTitleStyle: {
+            color: colors.main,
+            fontSize: 18,
+            fontWeight: '800',
+          },
+          headerTitleAlign: 'center',
         }}
         name="Agents"
         component={Agents}
       />
       <Tab.Screen
         options={{
-          tabBarIcon: () => {
-            return (
-              <Image
-                source={require('./assets/vandal.png')}
-                style={styles.image}
-              />
-            );
+          tabBarIcon: ({color}) => {
+            return <Icon name="pistol" color={color} size={30} />;
           },
+          title: 'Silahlar',
+          headerStyle: {
+            backgroundColor: colors.dark,
+          },
+          headerTitleStyle: {
+            color: colors.main,
+            fontSize: 18,
+            fontWeight: '800',
+          },
+          headerTitleAlign: 'center',
         }}
         name="Weapons"
         component={Weapons}
       />
       <Tab.Screen
         options={{
-          tabBarIcon: () => {
-            return (
-              <Image
-                source={require('./assets/ascent.png')}
-                style={styles.image}
-              />
-            );
+          tabBarIcon: ({color}) => {
+            return <Icon name="map" color={color} size={30} />;
           },
+          title: 'Haritalar',
+          headerStyle: {
+            backgroundColor: colors.dark,
+          },
+          headerTitleStyle: {
+            color: colors.main,
+            fontSize: 18,
+            fontWeight: '800',
+          },
+          headerTitleAlign: 'center',
         }}
         name="Maps"
         component={Maps}
