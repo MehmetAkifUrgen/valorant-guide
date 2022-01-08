@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import colors from '../../colors/colors';
 const window = Dimensions.get('window');
 export default StyleSheet.create({
@@ -7,9 +7,9 @@ export default StyleSheet.create({
     backgroundColor: colors.dark,
   },
   image: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
   },
   header: {
     height: window.height / 3,
@@ -25,6 +25,7 @@ export default StyleSheet.create({
   full: {
     width: window.width,
     height: window.height,
+    resizeMode: 'cover',
   },
   headImage: {
     width: window.width,

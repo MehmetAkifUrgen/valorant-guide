@@ -1,18 +1,18 @@
 import * as React from 'react';
-import {Text, StyleSheet, Image} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { Text, StyleSheet, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Agents from './src/pages/agents';
 import Weapons from './src/pages/weapons';
 import Maps from './src/pages/maps';
 import AgentsDetail from './src/pages/AgentsDetail';
 import WeaponsDetail from './src/pages/WeaponsDetail';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from './src/colors/colors';
 const Tab = createBottomTabNavigator();
 
-function BottomNavigator({navigation}) {
+function BottomNavigator({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -32,10 +32,11 @@ function BottomNavigator({navigation}) {
         tabBarLabelStyle: {
           fontSize: 14,
         },
-      }}>
+      }}
+    >
       <Tab.Screen
         options={{
-          tabBarIcon: ({color}) => {
+          tabBarIcon: ({ color }) => {
             return <Icon name="account" color={color} size={30} />;
           },
           title: 'Ajanlar',
@@ -54,7 +55,7 @@ function BottomNavigator({navigation}) {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({color}) => {
+          tabBarIcon: ({ color }) => {
             return <Icon name="pistol" color={color} size={30} />;
           },
           title: 'Silahlar',
@@ -73,7 +74,7 @@ function BottomNavigator({navigation}) {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({color}) => {
+          tabBarIcon: ({ color }) => {
             return <Icon name="map" color={color} size={30} />;
           },
           title: 'Haritalar',
@@ -98,8 +99,9 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Home" component={BottomNavigator} />
+      <StatusBar backgroundColor={colors.dark} />
+      <Stack.Navigator>
+        <Stack.Screen options={{ headerShown: false }} name="Home" component={BottomNavigator} />
         <Stack.Screen name="AgentsDetailPage" component={AgentsDetail} />
         <Stack.Screen name="WeaponsDetailPage" component={WeaponsDetail} />
       </Stack.Navigator>

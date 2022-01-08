@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 const value = Dimensions.get('window');
 import colors from '../../colors/colors';
 export default StyleSheet.create({
@@ -12,8 +12,8 @@ export default StyleSheet.create({
     flex: 1,
   },
   image: {
-    minWidth: value.width * 0.25,
-    height: value.height * 0.125,
+    minWidth: value.width * 0.3,
+    height: value.height * 0.15,
     resizeMode: 'cover',
   },
   text: {

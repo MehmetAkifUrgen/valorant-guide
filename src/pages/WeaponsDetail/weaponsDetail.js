@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import {
   Text,
   View,
@@ -13,13 +13,12 @@ import colors from '../../colors/colors';
 import Loading from '../../components/loading/loading';
 import * as Progress from 'react-native-progress';
 import WeaponSkins from '../../components/weaponSkins';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Video from 'react-native-video';
 
 const window = Dimensions.get('window');
-const WeaponsDetail = ({route, navigation}) => {
-  const {item} = route.params;
+const WeaponsDetail = ({ route, navigation }) => {
+  const { item } = route.params;
   const [visible, setVisible] = useState(false);
   const [url, setUrl] = useState('');
   const [thumb, setThumb] = useState('');
@@ -28,6 +27,20 @@ const WeaponsDetail = ({route, navigation}) => {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(null);
   const [progress, setProgress] = useState(null);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: item.displayName,
+      headerStyle: {
+        backgroundColor: colors.dark,
+      },
+      headerTitleStyle: {
+        color: colors.main,
+        fontSize: 18,
+        fontWeight: '800',
+      },
+      headerTitleAlign: 'center',
+    });
+  }, [navigation]);
 
   if (item.weaponStats == null) {
     return <Loading />;
@@ -42,13 +55,9 @@ const WeaponsDetail = ({route, navigation}) => {
     console.log('current Time: ', progress);
   }
 
-  function renderItem({item}) {
+  function renderItem({ item }) {
     return (
-      <WeaponSkins
-        skinPress={() => skinPress(item)}
-        onPress={() => showVideo(item)}
-        item={item}
-      />
+      <WeaponSkins skinPress={() => skinPress(item)} onPress={() => showVideo(item)} item={item} />
     );
   }
   function skinPress(item) {
@@ -69,7 +78,7 @@ const WeaponsDetail = ({route, navigation}) => {
     return (
       <View style={styles.videoView}>
         <Video
-          ref={ref => {
+          ref={(ref) => {
             videoPlayer = ref;
           }}
           style={styles.video}
@@ -86,9 +95,7 @@ const WeaponsDetail = ({route, navigation}) => {
         />
         {loading && <Loading />}
 
-        <TouchableOpacity
-          onPress={() => setVisible(!visible)}
-          style={styles.exitButton}>
+        <TouchableOpacity onPress={() => setVisible(!visible)} style={styles.exitButton}>
           <Icon color={colors.main} name="location-exit" size={50} />
         </TouchableOpacity>
       </View>
@@ -99,8 +106,9 @@ const WeaponsDetail = ({route, navigation}) => {
       <TouchableOpacity
         activeOpacity={1}
         style={styles.fullImageView}
-        onPress={() => setSkinVisible(!skinVisible)}>
-        <Image style={styles.fullImage} source={{uri: skin}} />
+        onPress={() => setSkinVisible(!skinVisible)}
+      >
+        <Image style={styles.fullImage} source={{ uri: skin }} />
       </TouchableOpacity>
     );
   }
@@ -116,15 +124,19 @@ const WeaponsDetail = ({route, navigation}) => {
 
       <ScrollView showsVerticalScrollIndicator={false} style={styles.body}>
         <View style={styles.barView}>
+          <Image
+            source={require('../../../assets/weaponDetailAssets/fireRate.png')}
+            style={styles.icon}
+          />
           <Text style={styles.barText}> Ateş Hızı(sn): </Text>
           <Progress.Circle
             showsText
-            formatText={text => text + item.weaponStats.fireRate}
+            formatText={(text) => text + item.weaponStats.fireRate}
             borderWidth={2}
             thickness={10}
-            borderColor={colors.main}
+            borderColor={colors.dark}
             style={styles.bar}
-            color={colors.main}
+            color={colors.dark}
             indeterminateAnimationDuration={3000}
             useNativeDriver
             progress={item.weaponStats.fireRate / 16}
@@ -132,83 +144,95 @@ const WeaponsDetail = ({route, navigation}) => {
           />
         </View>
         <View style={styles.barView}>
+          <Image
+            source={require('../../../assets/weaponDetailAssets/reload.png')}
+            style={styles.icon}
+          />
           <Text style={styles.barText}> Şarjör Değiştirme: </Text>
           <Progress.Circle
             showsText
-            formatText={text =>
-              text + item.weaponStats.reloadTimeSeconds + ' sn'
-            }
+            formatText={(text) => text + item.weaponStats.reloadTimeSeconds + ' sn'}
             borderWidth={2}
             thickness={10}
-            borderColor={colors.main}
+            borderColor={colors.dark}
             style={styles.bar}
-            color={colors.main}
+            color={colors.dark}
             useNativeDriver
             progress={1.5 / item.weaponStats.reloadTimeSeconds}
             size={75}
           />
         </View>
         <View style={styles.barView}>
-          <Text style={styles.barText}> İlk Kurşun İsabeti </Text>
+          <Image
+            source={require('../../../assets/weaponDetailAssets/firstBullet.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.barText}> İlk Kurşun İsabeti: </Text>
           <Progress.Circle
             showsText
-            formatText={text => text + item.weaponStats.firstBulletAccuracy}
+            formatText={(text) => text + item.weaponStats.firstBulletAccuracy}
             borderWidth={2}
             thickness={10}
-            borderColor={colors.main}
+            borderColor={colors.dark}
             style={styles.bar}
-            color={colors.main}
+            color={colors.dark}
             useNativeDriver
             progress={item.weaponStats.firstBulletAccuracy}
             size={75}
           />
         </View>
         <View style={styles.barView}>
-          <Text style={styles.barText}> HeadShot </Text>
+          <Image
+            source={require('../../../assets/weaponDetailAssets/headShot.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.barText}> HeadShot: </Text>
           <Progress.Circle
             showsText
-            formatText={text =>
-              text + item.weaponStats.damageRanges[0].headDamage
-            }
+            formatText={(text) => text + item.weaponStats.damageRanges[0].headDamage}
             borderWidth={2}
             thickness={10}
-            borderColor={colors.main}
+            borderColor={colors.dark}
             style={styles.bar}
-            color={colors.main}
+            color={colors.dark}
             useNativeDriver
             progress={item.weaponStats.damageRanges[0].headDamage / 150}
             size={75}
           />
         </View>
         <View style={styles.barView}>
-          <Text style={styles.barText}> Body Damage </Text>
+          <Image
+            source={require('../../../assets/weaponDetailAssets/bodyShot.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.barText}> Body Damage: </Text>
           <Progress.Circle
             showsText
-            formatText={text =>
-              text + item.weaponStats.damageRanges[0].bodyDamage
-            }
+            formatText={(text) => text + item.weaponStats.damageRanges[0].bodyDamage}
             borderWidth={2}
             thickness={10}
-            borderColor={colors.main}
+            borderColor={colors.dark}
             style={styles.bar}
-            color={colors.main}
+            color={colors.dark}
             useNativeDriver
             progress={item.weaponStats.damageRanges[0].bodyDamage / 150}
             size={75}
           />
         </View>
         <View style={styles.barView}>
-          <Text style={styles.barText}> Leg Damage </Text>
+          <Image
+            source={require('../../../assets/weaponDetailAssets/legShot.png')}
+            style={styles.icon}
+          />
+          <Text style={styles.barText}> Leg Damage: </Text>
           <Progress.Circle
             showsText
-            formatText={text =>
-              text + item.weaponStats.damageRanges[0].legDamage
-            }
+            formatText={(text) => text + item.weaponStats.damageRanges[0].legDamage}
             borderWidth={2}
             thickness={10}
-            borderColor={colors.main}
+            borderColor={colors.dark}
             style={styles.bar}
-            color={colors.main}
+            color={colors.dark}
             useNativeDriver
             progress={item.weaponStats.damageRanges[0].legDamage / 150}
             size={75}

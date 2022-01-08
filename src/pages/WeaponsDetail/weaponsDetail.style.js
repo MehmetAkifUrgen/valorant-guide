@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import colors from '../../colors/colors';
 const window = Dimensions.get('window');
 export default StyleSheet.create({
@@ -20,13 +20,13 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: window.width * 0.95,
-    backgroundColor: colors.dark,
+    backgroundColor: colors.pinkLight,
     borderRadius: 20,
     margin: 5,
   },
   barText: {
     fontSize: 16,
-    color: colors.main,
+    color: colors.dark,
     fontWeight: 'bold',
     flex: 1,
     fontFamily: 'Helvetica',
@@ -49,7 +49,7 @@ export default StyleSheet.create({
       },
     ],
   },
-  headView: {flex: 1},
+  headView: { flex: 1 },
   fullImage: {
     width: window.width,
     height: window.width * 0.7,
@@ -75,5 +75,11 @@ export default StyleSheet.create({
         rotate: '90deg',
       },
     ],
+  },
+  icon: {
+    width: 50,
+    height: 50,
+    margin: 5,
+    resizeMode: 'center',
   },
 });

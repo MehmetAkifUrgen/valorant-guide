@@ -1,7 +1,7 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Axios from 'axios';
 
-const UseGetNews = url => {
+const UseGetNews = (url) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ const UseGetNews = url => {
   useEffect(() => {
     fetchData();
   }, []);
-  return {error, loading, data};
+  return { error, loading, data };
 };
 
 export default UseGetNews;
