@@ -4,24 +4,34 @@ import styles from './agentsDetail.style';
 import colors from '../../colors/colors';
 import Sound from 'react-native-sound';
 import Abilities from '../../components/abilities';
+import translate from '../../translations/translate';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Error from '../../components/error/error';
 
 const AgentsDetail = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
+  const [dil, setLanguage] = useState('');
+
   useLayoutEffect(() => {
-    navigation.setOptions({
-      title: item.displayName,
-      headerStyle: {
-        backgroundColor: colors.dark,
-      },
-      headerTitleStyle: {
-        color: colors.main,
-        fontSize: 18,
-        fontWeight: '800',
-      },
-      headerTitleAlign: 'center',
+    AsyncStorage.getItem('language', (err, language) => {
+      setLanguage(language);
+      navigation.setOptions({
+        title: translate(language).ajanlar,
+        headerStyle: {
+          backgroundColor: colors.dark,
+        },
+        headerTitleStyle: {
+          color: colors.main,
+          fontSize: 18,
+          fontWeight: '800',
+        },
+        headerTitleAlign: 'center',
+      });
     });
   }, [navigation]);
+
   useEffect(() => {
+    console.log(dil);
     const track = new Sound(item.voiceLine.mediaList[0].wave, null, (e) => {
       if (e) {
         console.log('error loading track:', e);
@@ -29,7 +39,11 @@ const AgentsDetail = ({ route, navigation }) => {
         track.play();
       }
     });
+    return () => {
+      track.stop();
+    };
   }, []);
+
   function renderItem({ item }) {
     return <Abilities item={item} />;
   }

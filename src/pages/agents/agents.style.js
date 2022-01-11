@@ -15,4 +15,13 @@ export default StyleSheet.create({
     width: window.width,
     height: 60,
   },
+  menu: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: colors.main,
+    width: window.width / 3,
+
+    zIndex: 2,
+  },
 });

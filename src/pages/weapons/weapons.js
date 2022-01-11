@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, FlatList, StatusBar, ScrollView } from 'react-native';
 import Network from '../../network/network';
 import Item from '../../components/itemWeapons';
@@ -7,11 +7,61 @@ import Loading from '../../components/loading/loading';
 import Error from '../../components/error/error';
 import colors from '../../colors/colors';
 import FilterButton from '../../components/filterButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import translate from '../../translations/translate';
 
 const Weapons = ({ navigation }) => {
-  const { loading, data, error } = Network('weapons?language=tr-TR');
   const [currentRole, setCurrentRole] = useState(null);
   const [filter, setFilter] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [language, setLanguage] = useState('');
+  const [data, setData] = useState([]);
+
+  const getWeapons = () => {
+    AsyncStorage.getItem('language', (err, dil) => {
+      if (dil == null || dil == '') {
+        dil = 'en-EN';
+      }
+      setLanguage(dil);
+      fetch(`https://valorant-api.com/v1/weapons?language=${dil}`, {
+        method: 'GET',
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          setData(json.data), setLoading(false);
+        })
+        .catch((err) => {
+          setIsLoading(false), setError(err);
+        });
+    });
+  };
+  useLayoutEffect(() => {
+    AsyncStorage.getItem('language', (err, dill) => {
+      navigation.setOptions({
+        title: translate(dill).silahlar,
+        headerStyle: {
+          backgroundColor: colors.dark,
+        },
+        headerTitleStyle: {
+          color: colors.main,
+          fontSize: 18,
+          fontWeight: '800',
+        },
+        headerTitleAlign: 'center',
+      });
+    });
+  }, [navigation, language]);
+
+  useEffect(() => {
+    getWeapons();
+    return () => {
+      getWeapons();
+    };
+  }, []);
+  useEffect(() => {
+    getWeapons();
+  }, [language]);
 
   const renderItem = ({ item }) => {
     if (item.weaponStats == null) {
@@ -36,45 +86,45 @@ const Weapons = ({ navigation }) => {
       <View style={{ height: 70 }}>
         <ScrollView contentContainerStyle={styles.filterView} horizontal={true}>
           <FilterButton
-            text={'Tümü'}
+            text={translate(language).tumu}
             onPress={() => {
               setFilter(false);
             }}
           />
           <FilterButton
-            text={'Ağır Silahlar'}
+            text={translate(language).agırsilahlar}
             onPress={() => {
-              setFilter(true), setCurrentRole('Ağır Silahlar');
+              setFilter(true), setCurrentRole(translate(language).agırsilahlar);
             }}
           />
           <FilterButton
-            text={'Taarruz Tüfekleri'}
+            text={translate(language).taarruzTufekleri}
             onPress={() => {
-              setFilter(true), setCurrentRole('Taarruz Tüfekleri');
+              setFilter(true), setCurrentRole(translate(language).taarruzTufekleri);
             }}
           />
           <FilterButton
-            text={'Pompalı Tüfekler'}
+            text={translate(language).pompalı}
             onPress={() => {
-              setFilter(true), setCurrentRole('Pompalı Tüfekler');
+              setFilter(true), setCurrentRole(translate(language).pompalı);
             }}
           />
           <FilterButton
-            text={'Beylik Silahlar'}
+            text={translate(language).beylikSilahları}
             onPress={() => {
-              setFilter(true), setCurrentRole('Beylik Silahlar');
+              setFilter(true), setCurrentRole(translate(language).beylikSilahları);
             }}
           />
           <FilterButton
-            text={'Keskin Nişancı Tüfekleri'}
+            text={translate(language).keskinNişancı}
             onPress={() => {
-              setFilter(true), setCurrentRole('Keskin Nişancı Tüfekleri');
+              setFilter(true), setCurrentRole(translate(language).keskinNişancı);
             }}
           />
           <FilterButton
-            text={'Hafif Makineliler'}
+            text={translate(language).hafif}
             onPress={() => {
-              setFilter(true), setCurrentRole('Hafif Makineliler');
+              setFilter(true), setCurrentRole(translate(language).hafif);
             }}
           />
         </ScrollView>
