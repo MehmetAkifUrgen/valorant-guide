@@ -9,49 +9,48 @@ import colors from '../../colors/colors';
 import FilterButton from '../../components/filterButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import translate from '../../translations/translate';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLanguage } from '../../redux/reducer';
 
 const Weapons = ({ navigation }) => {
   const [currentRole, setCurrentRole] = useState(null);
   const [filter, setFilter] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [language, setLanguage] = useState('');
+  const [language, setLanguage] = useState('en-US');
   const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const sums = useSelector((state) => state.sepet.language);
 
   const getWeapons = () => {
     AsyncStorage.getItem('language', (err, dil) => {
-      if (dil == null || dil == '') {
-        dil = 'en-EN';
-      }
-      setLanguage(dil);
-      fetch(`https://valorant-api.com/v1/weapons?language=${dil}`, {
-        method: 'GET',
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          setData(json.data), setLoading(false);
+      if (dil != null) {
+        setLanguage(dil);
+
+        fetch(`https://valorant-api.com/v1/weapons?language=${dil}`, {
+          method: 'GET',
         })
-        .catch((err) => {
-          setIsLoading(false), setError(err);
-        });
+          .then((response) => response.json())
+          .then((json) => {
+            setData(json.data), setLoading(false);
+          })
+          .catch((err) => {
+            setError(err);
+          });
+      } else {
+        fetch(`https://valorant-api.com/v1/weapons?language=en-US`, {
+          method: 'GET',
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            setData(json.data), setLoading(false);
+          })
+          .catch((err) => {
+            setError(err);
+          });
+      }
     });
   };
-  useLayoutEffect(() => {
-    AsyncStorage.getItem('language', (err, dill) => {
-      navigation.setOptions({
-        title: translate(dill).silahlar,
-        headerStyle: {
-          backgroundColor: colors.dark,
-        },
-        headerTitleStyle: {
-          color: colors.main,
-          fontSize: 18,
-          fontWeight: '800',
-        },
-        headerTitleAlign: 'center',
-      });
-    });
-  }, [navigation, language]);
 
   useEffect(() => {
     getWeapons();
@@ -59,9 +58,6 @@ const Weapons = ({ navigation }) => {
       getWeapons();
     };
   }, []);
-  useEffect(() => {
-    getWeapons();
-  }, [language]);
 
   const renderItem = ({ item }) => {
     if (item.weaponStats == null) {
@@ -86,7 +82,11 @@ const Weapons = ({ navigation }) => {
       <View style={{ height: 70 }}>
         <ScrollView contentContainerStyle={styles.filterView} horizontal={true}>
           <FilterButton
-            text={translate(language).tumu}
+            text={
+              translate(language).tumu == undefined
+                ? translate('en-US').tumu
+                : translate(language).tumu
+            }
             onPress={() => {
               setFilter(false);
             }}

@@ -64,11 +64,11 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.main,
+    backgroundColor: colors.blue,
   },
   video: {
     width: window.height,
-    height: window.width * 0.8,
+    height: window.width * 0.85,
 
     transform: [
       {

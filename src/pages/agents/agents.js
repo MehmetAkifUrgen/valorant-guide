@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { StatusBar, FlatList, View, ScrollView, TouchableWithoutFeedback } from 'react-native';
-import Network from '../../network/network';
+
 import Item from '../../components/item';
 import styles from './agents.style';
 import Loading from '../../components/loading/loading';
@@ -9,59 +9,54 @@ import colors from '../../colors/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FilterButton from '../../components/filterButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+
 import LanguageItem from '../../components/languageItem';
 import translate from '../../translations/translate';
+
+import RNRestart from 'react-native-restart';
 
 const Agents = ({ navigation }) => {
   const [currentRole, setCurrentRole] = useState(null);
   const [filter, setFilter] = useState(false);
-  const { getItem, setItem } = useAsyncStorage('language');
   const [menu, setMenu] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [language, setLanguage] = useState('');
+  const [language, setLanguage] = useState('en-US');
   const [data, setData] = useState([]);
-  const readItemFromStorage = async () => {
-    const item = await getItem();
-    setLanguage(item);
-  };
-  const getAgents = () => {
-    AsyncStorage.getItem('language', (err, dil) => {
-      if (dil == null || dil == '') {
-        dil = 'en-EN';
-      }
-      setLanguage(dil);
-      fetch(`https://valorant-api.com/v1/agents?language=${dil}`, {
-        method: 'GET',
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          setData(json.data), setLoading(false);
+
+  // console.log(sums);
+  const getAgents = async () => {
+    await AsyncStorage.getItem('language', (err, dil) => {
+      if (dil != null) {
+        setLanguage(dil);
+
+        fetch(`https://valorant-api.com/v1/agents?language=${dil}`, {
+          method: 'GET',
         })
-        .catch((err) => {
-          setIsLoading(false), setError(err);
-        });
+          .then((response) => response.json())
+          .then((json) => {
+            setData(json.data), setLoading(false);
+          })
+          .catch((err) => {
+            setError(err);
+          });
+      } else {
+        fetch(`https://valorant-api.com/v1/agents?language=en-US`, {
+          method: 'GET',
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            setData(json.data), setLoading(false);
+          })
+          .catch((err) => {
+            setError(err);
+          });
+      }
     });
   };
-  useLayoutEffect(() => {
-    AsyncStorage.getItem('language', (err, dill) => {
-      navigation.setOptions({
-        title: translate(dill).ajanlar,
-        headerStyle: {
-          backgroundColor: colors.dark,
-        },
-        headerTitleStyle: {
-          color: colors.main,
-          fontSize: 18,
-          fontWeight: '800',
-        },
-        headerTitleAlign: 'center',
-      });
-    });
-  }, [navigation, language]);
 
   useEffect(() => {
+    setLanguage('en-US');
     getAgents();
   }, []);
   useEffect(() => {
@@ -102,9 +97,7 @@ const Agents = ({ navigation }) => {
   if (loading) {
     return <Loading />;
   }
-  if (data[0].role.displayName == null) {
-    return <Loading />;
-  }
+
   if (error) {
     return <Error />;
   }
@@ -120,6 +113,7 @@ const Agents = ({ navigation }) => {
                 AsyncStorage.setItem('language', 'en-US').then(() => {
                   // console.log("TOKEN ==>>", champ)
                 });
+                RNRestart.Restart();
               }}
               uri={'https://flag.muratoner.net/?country=gb'}
               language={'English'}
@@ -130,6 +124,7 @@ const Agents = ({ navigation }) => {
                 AsyncStorage.setItem('language', 'de-DE').then(() => {
                   // console.log("TOKEN ==>>", champ)
                 });
+                RNRestart.Restart();
               }}
               uri={'https://flag.muratoner.net/?country=de'}
               language={'Deutsch'}
@@ -140,6 +135,7 @@ const Agents = ({ navigation }) => {
                 AsyncStorage.setItem('language', 'fr-FR').then(() => {
                   // console.log("TOKEN ==>>", champ)
                 });
+                RNRestart.Restart();
               }}
               uri={'https://flag.muratoner.net/?country=fr'}
               language={'Français'}
@@ -150,16 +146,18 @@ const Agents = ({ navigation }) => {
                 AsyncStorage.setItem('language', 'es-ES').then(() => {
                   // console.log("TOKEN ==>>", champ)
                 });
+                RNRestart.Restart();
               }}
               uri={'https://flag.muratoner.net/?country=es'}
               language={'Español'}
             />
             <LanguageItem
               onPress={() => {
-                setMenu(false), setLanguage('tr-TR');
-                AsyncStorage.setItem('language', 'tr-TR').then(() => {
-                  // console.log("TOKEN ==>>", champ)
-                });
+                setMenu(false),
+                  AsyncStorage.setItem('language', 'tr-TR').then(() => {
+                    // console.log("TOKEN ==>>", champ)
+                  });
+                RNRestart.Restart();
               }}
               uri={'https://flag.muratoner.net/?country=tr'}
               language={'Türkçe'}
@@ -170,6 +168,7 @@ const Agents = ({ navigation }) => {
                 AsyncStorage.setItem('language', 'it-IT').then(() => {
                   // console.log("TOKEN ==>>", champ)
                 });
+                RNRestart.Restart();
               }}
               uri={'https://flag.muratoner.net/?country=it'}
               language={'İtaliano'}
@@ -180,9 +179,10 @@ const Agents = ({ navigation }) => {
                 AsyncStorage.setItem('language', 'ar-AE').then(() => {
                   // console.log("TOKEN ==>>", champ)
                 });
+                RNRestart.Restart();
               }}
               uri={'https://flag.muratoner.net/?country=ae'}
-              language={'عربى'}
+              language={'Arabic'}
             />
           </View>
         )}
@@ -194,7 +194,11 @@ const Agents = ({ navigation }) => {
             horizontal={true}
           >
             <FilterButton
-              text={translate(language).tumu}
+              text={
+                language == undefined || language == null
+                  ? translate('en-US').tumu
+                  : translate(language).tumu
+              }
               onPress={() => {
                 setFilter(false);
                 setMenu(false);

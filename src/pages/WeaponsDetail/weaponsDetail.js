@@ -15,6 +15,8 @@ import * as Progress from 'react-native-progress';
 import WeaponSkins from '../../components/weaponSkins';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Video from 'react-native-video';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import translate from '../../translations/translate';
 
 const window = Dimensions.get('window');
 const WeaponsDetail = ({ route, navigation }) => {
@@ -27,6 +29,7 @@ const WeaponsDetail = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(null);
   const [progress, setProgress] = useState(null);
+  const [language, setLanguage] = useState('en-US');
   useLayoutEffect(() => {
     navigation.setOptions({
       title: item.displayName,
@@ -39,6 +42,10 @@ const WeaponsDetail = ({ route, navigation }) => {
         fontWeight: '800',
       },
       headerTitleAlign: 'center',
+    });
+    AsyncStorage.getItem('language', (err, dil) => {
+      if (dil != null) setLanguage(dil);
+      else setLanguage('en-US');
     });
   }, [navigation]);
 
@@ -128,7 +135,7 @@ const WeaponsDetail = ({ route, navigation }) => {
             source={require('../../../assets/weaponDetailAssets/fireRate.png')}
             style={styles.icon}
           />
-          <Text style={styles.barText}> Ateş Hızı(sn): </Text>
+          <Text style={styles.barText}> {translate(language).atesHızı} </Text>
           <Progress.Circle
             showsText
             formatText={(text) => text + item.weaponStats.fireRate}
@@ -148,7 +155,7 @@ const WeaponsDetail = ({ route, navigation }) => {
             source={require('../../../assets/weaponDetailAssets/reload.png')}
             style={styles.icon}
           />
-          <Text style={styles.barText}> Şarjör Değiştirme: </Text>
+          <Text style={styles.barText}> {translate(language).sarjörDegistirme} </Text>
           <Progress.Circle
             showsText
             formatText={(text) => text + item.weaponStats.reloadTimeSeconds + ' sn'}
@@ -167,7 +174,7 @@ const WeaponsDetail = ({ route, navigation }) => {
             source={require('../../../assets/weaponDetailAssets/firstBullet.png')}
             style={styles.icon}
           />
-          <Text style={styles.barText}> İlk Kurşun İsabeti: </Text>
+          <Text style={styles.barText}> {translate(language).ilkKurşun} </Text>
           <Progress.Circle
             showsText
             formatText={(text) => text + item.weaponStats.firstBulletAccuracy}
@@ -186,7 +193,7 @@ const WeaponsDetail = ({ route, navigation }) => {
             source={require('../../../assets/weaponDetailAssets/headShot.png')}
             style={styles.icon}
           />
-          <Text style={styles.barText}> HeadShot: </Text>
+          <Text style={styles.barText}> {translate(language).headShot} </Text>
           <Progress.Circle
             showsText
             formatText={(text) => text + item.weaponStats.damageRanges[0].headDamage}
@@ -205,7 +212,7 @@ const WeaponsDetail = ({ route, navigation }) => {
             source={require('../../../assets/weaponDetailAssets/bodyShot.png')}
             style={styles.icon}
           />
-          <Text style={styles.barText}> Body Damage: </Text>
+          <Text style={styles.barText}> {translate(language).bodyDamage} </Text>
           <Progress.Circle
             showsText
             formatText={(text) => text + item.weaponStats.damageRanges[0].bodyDamage}
@@ -224,7 +231,7 @@ const WeaponsDetail = ({ route, navigation }) => {
             source={require('../../../assets/weaponDetailAssets/legShot.png')}
             style={styles.icon}
           />
-          <Text style={styles.barText}> Leg Damage: </Text>
+          <Text style={styles.barText}> {translate(language).legDamage} </Text>
           <Progress.Circle
             showsText
             formatText={(text) => text + item.weaponStats.damageRanges[0].legDamage}

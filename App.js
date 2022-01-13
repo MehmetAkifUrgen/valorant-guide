@@ -12,10 +12,37 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import colors from './src/colors/colors';
+import { Provider } from 'react-redux';
+import initialState from './src/redux/store';
+import translate from './src/translations/translate';
+import { useSelector, useDispatch } from 'react-redux';
+import { getLanguage } from './src/redux/reducer';
 
 const Tab = createBottomTabNavigator();
 
 function BottomNavigator({ navigation }) {
+  useEffect(() => {
+    setLanguage('en-US');
+    getData();
+    return () => {
+      setLanguage('');
+    };
+  }, [language]);
+  const [language, setLanguage] = useState('en-US');
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('language');
+      if (value !== null) {
+        setLanguage(value);
+        return value;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  console.log(translate(language).ajanlar);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -42,7 +69,7 @@ function BottomNavigator({ navigation }) {
           tabBarIcon: ({ color }) => {
             return <Icon name="account" color={color} size={30} />;
           },
-          title: 'Ajanlar',
+          title: translate(language).ajanlar,
           headerStyle: {
             backgroundColor: colors.dark,
           },
@@ -61,7 +88,7 @@ function BottomNavigator({ navigation }) {
           tabBarIcon: ({ color }) => {
             return <Icon name="pistol" color={color} size={30} />;
           },
-          title: 'Silahlar',
+          title: translate(language).silahlar,
           headerStyle: {
             backgroundColor: colors.dark,
           },
@@ -80,7 +107,7 @@ function BottomNavigator({ navigation }) {
           tabBarIcon: ({ color }) => {
             return <Icon name="map" color={color} size={30} />;
           },
-          title: 'Haritalar',
+          title: translate(language).haritalar,
           headerStyle: {
             backgroundColor: colors.dark,
           },
@@ -101,20 +128,15 @@ function BottomNavigator({ navigation }) {
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <NavigationContainer>
-      <StatusBar backgroundColor={colors.dark} />
-      <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Home" component={BottomNavigator} />
-        <Stack.Screen name="AgentsDetailPage" component={AgentsDetail} />
-        <Stack.Screen name="WeaponsDetailPage" component={WeaponsDetail} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={initialState}>
+      <NavigationContainer>
+        <StatusBar backgroundColor={colors.dark} />
+        <Stack.Navigator>
+          <Stack.Screen options={{ headerShown: false }} name="Home" component={BottomNavigator} />
+          <Stack.Screen name="AgentsDetailPage" component={AgentsDetail} />
+          <Stack.Screen name="WeaponsDetailPage" component={WeaponsDetail} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
-const styles = StyleSheet.create({
-  image: {
-    maxWidth: 80,
-    height: 45,
-    resizeMode: 'contain',
-  },
-});
