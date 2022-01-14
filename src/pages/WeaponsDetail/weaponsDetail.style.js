@@ -52,7 +52,7 @@ export default StyleSheet.create({
   headView: { flex: 1 },
   fullImage: {
     width: window.width,
-    height: window.width * 0.7,
+    height: window.width * 0.9,
     transform: [
       {
         rotate: '45deg',
