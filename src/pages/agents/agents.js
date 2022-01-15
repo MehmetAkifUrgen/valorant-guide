@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import LanguageItem from '../../components/languageItem';
 import translate from '../../translations/translate';
+import SplashScreen from 'react-native-splash-screen';
 
 import RNRestart from 'react-native-restart';
 
@@ -56,6 +57,7 @@ const Agents = ({ navigation }) => {
   };
 
   useEffect(() => {
+    SplashScreen.hide();
     setLanguage('en-US');
     getAgents();
   }, []);
