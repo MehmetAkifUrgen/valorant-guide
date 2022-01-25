@@ -5,6 +5,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.blue,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   filterView: {

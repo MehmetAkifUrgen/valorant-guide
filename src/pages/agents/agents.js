@@ -1,6 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from 'react';
-import { StatusBar, FlatList, View, ScrollView, TouchableWithoutFeedback } from 'react-native';
-
+import { FlatList, View, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import Item from '../../components/item';
 import styles from './agents.style';
 import Loading from '../../components/loading/loading';
@@ -9,12 +8,11 @@ import colors from '../../colors/colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FilterButton from '../../components/filterButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import LanguageItem from '../../components/languageItem';
 import translate from '../../translations/translate';
 import SplashScreen from 'react-native-splash-screen';
-
 import RNRestart from 'react-native-restart';
+import { AnimatedFlatList, AnimationType } from 'flatlist-intro-animations';
 
 const Agents = ({ navigation }) => {
   const [currentRole, setCurrentRole] = useState(null);
@@ -75,6 +73,17 @@ const Agents = ({ navigation }) => {
             size={30}
             color={colors.main}
             style={{ marginRight: 10 }}
+          />
+        );
+      },
+      headerLeft: () => {
+        return (
+          <Icon
+            onPress={() => navigation.navigate('Account')}
+            name="account"
+            size={30}
+            color={colors.main}
+            style={{ marginLeft: 10 }}
           />
         );
       },
@@ -237,7 +246,7 @@ const Agents = ({ navigation }) => {
           </ScrollView>
         </View>
 
-        <FlatList
+        <AnimatedFlatList
           showsVerticalScrollIndicator={false}
           data={
             filter
@@ -246,6 +255,8 @@ const Agents = ({ navigation }) => {
           }
           renderItem={renderItem}
           numColumns={2}
+          animationType={AnimationType.Dive}
+          animationDuration={1000}
         />
       </View>
     </TouchableWithoutFeedback>

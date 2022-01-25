@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Agents from './src/pages/agents';
@@ -10,13 +10,10 @@ import WeaponsDetail from './src/pages/WeaponsDetail';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import colors from './src/colors/colors';
-import { Provider } from 'react-redux';
-import initialState from './src/redux/store';
 import translate from './src/translations/translate';
-import { useSelector, useDispatch } from 'react-redux';
-import { getLanguage } from './src/redux/reducer';
+import 'react-native-gesture-handler';
+import Account from './src/pages/account';
 
 const Tab = createBottomTabNavigator();
 
@@ -126,17 +123,18 @@ function BottomNavigator({ navigation }) {
 }
 
 const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <Provider store={initialState}>
-      <NavigationContainer>
-        <StatusBar backgroundColor={colors.dark} />
-        <Stack.Navigator>
-          <Stack.Screen options={{ headerShown: false }} name="Home" component={BottomNavigator} />
-          <Stack.Screen name="AgentsDetailPage" component={AgentsDetail} />
-          <Stack.Screen name="WeaponsDetailPage" component={WeaponsDetail} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <StatusBar backgroundColor={colors.dark} />
+
+      <Stack.Navigator>
+        <Stack.Screen options={{ headerShown: false }} name="Home" component={BottomNavigator} />
+        <Stack.Screen name="AgentsDetailPage" component={AgentsDetail} />
+        <Stack.Screen name="WeaponsDetailPage" component={WeaponsDetail} />
+        <Stack.Screen name="Account" component={Account} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }

@@ -9,12 +9,13 @@ export default StyleSheet.create({
     margin: 10,
     padding: 10,
     borderRadius: 15,
-    flex: 1,
+    minWidth: value.width * 0.4,
+    minHeight: value.height * 0.2,
   },
   image: {
-    minWidth: value.width * 0.3,
-    height: value.height * 0.15,
-    resizeMode: 'cover',
+    minWidth: value.width * 0.4,
+    minHeight: value.height * 0.18,
+    resizeMode: 'contain',
   },
   text: {
     fontSize: 16,

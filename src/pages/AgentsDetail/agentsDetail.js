@@ -18,7 +18,7 @@ const AgentsDetail = ({ route, navigation }) => {
       if (language != null) {
         setLanguage(language);
         navigation.setOptions({
-          title: translate(language).ajanlar,
+          title: item.displayName,
           headerStyle: {
             backgroundColor: colors.dark,
           },
@@ -32,7 +32,7 @@ const AgentsDetail = ({ route, navigation }) => {
       } else {
         setLanguage('en-US');
         navigation.setOptions({
-          title: translate(dil).ajanlar,
+          title: item.displayName,
           headerStyle: {
             backgroundColor: colors.dark,
           },

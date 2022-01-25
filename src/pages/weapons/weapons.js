@@ -9,8 +9,6 @@ import colors from '../../colors/colors';
 import FilterButton from '../../components/filterButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import translate from '../../translations/translate';
-import { useSelector, useDispatch } from 'react-redux';
-import { getLanguage } from '../../redux/reducer';
 
 const Weapons = ({ navigation }) => {
   const [currentRole, setCurrentRole] = useState(null);
@@ -19,8 +17,6 @@ const Weapons = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState('en-US');
   const [data, setData] = useState([]);
-  const dispatch = useDispatch();
-  const sums = useSelector((state) => state.sepet.language);
 
   const getWeapons = () => {
     AsyncStorage.getItem('language', (err, dil) => {
