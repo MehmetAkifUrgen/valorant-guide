@@ -13,7 +13,7 @@ const Maps = ({ params }) => {
   };
   return (
     <View style={styles.container}>
-      <FlatList horizontal data={data} renderItem={renderItem} />
+      <FlatList  horizontal data={data} renderItem={renderItem} />
     </View>
   );
 };

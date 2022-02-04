@@ -28,6 +28,7 @@ const AgentsDetail = ({ route, navigation }) => {
             fontWeight: '800',
           },
           headerTitleAlign: 'center',
+          headerTintColor: colors.main
         });
       } else {
         setLanguage('en-US');
@@ -42,6 +43,7 @@ const AgentsDetail = ({ route, navigation }) => {
             fontWeight: '800',
           },
           headerTitleAlign: 'center',
+          headerTintColor: colors.main
         });
       }
     });

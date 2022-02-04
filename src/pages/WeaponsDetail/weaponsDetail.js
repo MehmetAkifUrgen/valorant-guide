@@ -42,6 +42,7 @@ const WeaponsDetail = ({ route, navigation }) => {
         fontWeight: '800',
       },
       headerTitleAlign: 'center',
+      headerTintColor: colors.main
     });
     AsyncStorage.getItem('language', (err, dil) => {
       if (dil != null) setLanguage(dil);

@@ -5,13 +5,15 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.dark,
+    
+    alignItems:'center'
   },
   image: {
     width: 50,
     height: 50,
   },
   text: {
-    color: 'white',
+    color: '#f5f5f5',
     fontSize: 14,
   },
   itemView: {
@@ -27,7 +29,7 @@ export default StyleSheet.create({
   smallText: {
     fontSize: 10,
     fontWeight: '600',
-    color: 'white',
+    color: '#Ebf6f7',
   },
   four: {
     width: window.width / 5,
@@ -40,17 +42,20 @@ export default StyleSheet.create({
   name: {
     fontWeight: '700',
     fontSize: 14,
-    color: 'white',
+    color: '#f8f8ff',
   },
   character: {
-    color: 'white',
+    color: '#fdf5e6',
     fontSize: 11,
   },
   gameList: {
-    margin: 5,
-    padding: 5,
+    margin: 7,
+    padding: 7,
     borderRadius: 5,
     flexDirection: 'row',
+    alignItems:'center',
+    justifyContent:'center',
+    
   },
   avatar: {
     width: 100,
@@ -75,9 +80,35 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   modal: {
-    flex: 1,
+    
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 2,
   },
+  date:{
+    fontSize:13.5,
+    color:'#fdf5e6',
+    fontWeight:'500'
+  },
+  kda:{
+    fontSize:17.5,
+    color:'#f5f5f5',
+    fontWeight:'800'
+  },
+  map:{
+    fontSize:14.5,
+    color:'#f8f8ff',
+    fontWeight:'600'
+  },
+  team:{
+    fontSize:13.5,
+    color:'#Ebf6f7',
+    fontWeight:'500'
+  },
+  gameItemRightView:{
+    
+    alignItems:'flex-start',
+    justifyContent:'center',
+    margin:4
+  }
 });

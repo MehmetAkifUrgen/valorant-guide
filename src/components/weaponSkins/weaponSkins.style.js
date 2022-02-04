@@ -4,12 +4,12 @@ const window = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     marginLeft: window.width * 0.025,
-
     backgroundColor: colors.dark,
     borderRadius: 20,
     marginTop: 20,
-
-    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    padding:10
   },
   image: {
     width: window.width * 0.4,
@@ -44,6 +44,6 @@ export default StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    
   },
 });
