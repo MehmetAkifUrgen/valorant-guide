@@ -14,7 +14,7 @@ export default StyleSheet.create({
   },
   text: {
     color: '#f5f5f5',
-    fontSize: 14,
+    fontSize: 16,
   },
   itemView: {
     flexDirection: 'row',
@@ -23,11 +23,12 @@ export default StyleSheet.create({
     padding: 2,
     borderRadius: 2,
     borderWidth: 2,
-    marginHorizontal: 10,
+    
     borderColor: colors.dark,
+    
   },
   smallText: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: '600',
     color: '#Ebf6f7',
   },
@@ -41,12 +42,12 @@ export default StyleSheet.create({
   },
   name: {
     fontWeight: '700',
-    fontSize: 14,
+    fontSize: 16,
     color: '#f8f8ff',
   },
   character: {
     color: '#fdf5e6',
-    fontSize: 11,
+    fontSize: 13,
   },
   gameList: {
     margin: 7,
@@ -54,7 +55,8 @@ export default StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     alignItems:'center',
-    justifyContent:'center',
+    justifyContent:'space-around',
+    width:window.width *0.9
     
   },
   avatar: {
@@ -70,7 +72,7 @@ export default StyleSheet.create({
   },
   input: {
     color: 'white',
-    fontSize: 14,
+    fontSize: 16,
   },
   inputView: {
     flexDirection: 'row',
@@ -86,22 +88,22 @@ export default StyleSheet.create({
     zIndex: 2,
   },
   date:{
-    fontSize:13.5,
+    fontSize:15,
     color:'#fdf5e6',
     fontWeight:'500'
   },
   kda:{
-    fontSize:17.5,
+    fontSize:18,
     color:'#f5f5f5',
     fontWeight:'800'
   },
   map:{
-    fontSize:14.5,
+    fontSize:15,
     color:'#f8f8ff',
     fontWeight:'600'
   },
   team:{
-    fontSize:13.5,
+    fontSize:14,
     color:'#Ebf6f7',
     fontWeight:'500'
   },

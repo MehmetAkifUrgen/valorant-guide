@@ -14,6 +14,7 @@ import colors from './src/colors/colors';
 import translate from './src/translations/translate';
 import 'react-native-gesture-handler';
 import Account from './src/pages/account';
+import GameHistory from './src/pages/account/gameHistory'
 
 const Tab = createBottomTabNavigator();
 
@@ -134,6 +135,7 @@ export default function App() {
         <Stack.Screen name="AgentsDetailPage" component={AgentsDetail} />
         <Stack.Screen name="WeaponsDetailPage" component={WeaponsDetail} />
         <Stack.Screen name="Account" component={Account} />
+        <Stack.Screen name="GameHistory" options={{ headerShown:false}} component={GameHistory} />
       </Stack.Navigator>
     </NavigationContainer>
   );

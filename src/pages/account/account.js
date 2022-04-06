@@ -88,48 +88,15 @@ const Account = ({ navigation }) => {
   if (loading) {
     return <Loading />;
   }
-  const renderItem = ({ item }) => {
-    return (
-      <View
-        style={[
-          styles.itemView,
-          { backgroundColor: item.team.toLowerCase() == 'blue' ? '#0047ab' : colors.main },
-        ]}
-      >
-        <View style={styles.four}>
-          <Image
-            resizeMode="contain"
-            style={styles.image}
-            source={{ uri: item.assets.agent.small }}
-          />
-          <Text style={styles.character}> {item.character} </Text>
-          <Text numberOfLines={1} adjustsFontSizeToFit style={styles.name}>
-            {' '}
-            {item.name}
-          </Text>
-        </View>
-        <View>
-          <Text style={styles.text}>
-            {' '}
-            {item.stats.kills}/{item.stats.deaths}/{item.stats.assists}{' '}
-          </Text>
-        </View>
-        <View style={styles.four}>
-          <Text style={styles.text}> Level : {item.level} </Text>
-          <Text style={styles.text}> {item.currenttier_patched} </Text>
-        </View>
-        <View style={styles.last}>
-          <Text style={styles.smallText}> Total Damage : {item.damage_made} </Text>
-          <Text style={styles.smallText}> Headshots : {item.stats.headshots} </Text>
-          <Text style={styles.smallText}> Bodyshots : {item.stats.bodyshots} </Text>
-          <Text style={styles.smallText}> LegShots : {item.stats.legshots} </Text>
-        </View>
-      </View>
-    );
-  };
+  
   function itemPress(iss,no) {
     setIndex(no);
     setVisible(!visible);
+    let data=see[index].players.all_players
+      /* 1. Navigate to the Details route with params */
+      navigation.navigate('GameHistory', {
+        data
+      });
     
   }
   
@@ -223,19 +190,7 @@ const Account = ({ navigation }) => {
         </View>
       </KeyboardAvoidingView>
       {see.length>0 ? <FlatList data={see} renderItem={gamesRender} /> : <Text style={styles.text} >No Data</Text>}
-      <Modal
-      
-        swipeDirection="left"
-        propagateSwipe={true}
-        onBackButtonPress={() => setVisible(false)}
-        coverScreen={true}
-        hideModalContentWhileAnimating
-        style={styles.modal}
-        isVisible={visible}
-      >
-        { see.length>0 ?
-          <FlatList data={see[index].players.all_players} renderItem={renderItem} /> : <View></View>}
-      </Modal>
+     
       {/* <Text style={styles.text}> {see.account_level} </Text>
       <Text style={styles.text}> {see.name} </Text>  */}
     </View>
