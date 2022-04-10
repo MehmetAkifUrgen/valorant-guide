@@ -9,8 +9,12 @@ import colors from '../../colors/colors';
 import FilterButton from '../../components/filterButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import translate from '../../translations/translate';
+import { useInterstitialAd } from '@react-native-admob/admob';
 
 const Weapons = ({ navigation }) => {
+  const { adLoaded, adDismissed, show } = useInterstitialAd(
+    "ca-app-pub-7956816566156883/8091465599"
+  );
   const [currentRole, setCurrentRole] = useState(null);
   const [filter, setFilter] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -54,6 +58,11 @@ const Weapons = ({ navigation }) => {
       getWeapons();
     };
   }, []);
+  // useEffect(() => {
+  //   if (adDismissed) {
+  //     navigation.navigate('WeaponsDetailPage', { item: item });
+  //   }
+  // }, [adDismissed, navigation]);
 
   const renderItem = ({ item }) => {
     if (item.weaponStats == null) {
@@ -61,7 +70,13 @@ const Weapons = ({ navigation }) => {
     } else {
       return (
         <Item
-          onPress={() => navigation.navigate('WeaponsDetailPage', { item: item })}
+          onPress={() => {
+            if (adLoaded) {
+              show();
+            } else {
+              navigation.navigate('WeaponsDetailPage', { item: item });
+            }
+          } }
           item={item}
         />
       );

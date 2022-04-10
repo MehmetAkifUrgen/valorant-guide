@@ -8,6 +8,7 @@ import translate from '../../translations/translate';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Error from '../../components/error/error';
 import RNFetchBlob from 'rn-fetch-blob';
+import { BannerAd, BannerAdSize } from '@react-native-admob/admob';
 
 const AgentsDetail = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
@@ -136,6 +137,8 @@ const AgentsDetail = ({ route, navigation }) => {
           />
         </>
       )}
+      <BannerAd size={BannerAdSize.BANNER}
+        onAdFailedToLoad={(error) => console.error(error)} unitId={"ca-app-pub-7956816566156883/9212975576"} />
     </View>
   );
 };

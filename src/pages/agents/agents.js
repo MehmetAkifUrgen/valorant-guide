@@ -13,6 +13,7 @@ import translate from '../../translations/translate';
 import SplashScreen from 'react-native-splash-screen';
 import RNRestart from 'react-native-restart';
 import { AnimatedFlatList, AnimationType } from 'flatlist-intro-animations';
+import { useInterstitialAd } from '@react-native-admob/admob';
 
 const Agents = ({ navigation }) => {
   const [currentRole, setCurrentRole] = useState(null);
@@ -22,6 +23,9 @@ const Agents = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [language, setLanguage] = useState('en-US');
   const [data, setData] = useState([]);
+  const { adLoaded, adDismissed, show } = useInterstitialAd(
+    "ca-app-pub-7956816566156883/5596415764"
+  );
 
   // console.log(sums);
   const getAgents = async () => {
@@ -79,7 +83,13 @@ const Agents = ({ navigation }) => {
       headerLeft: () => {
         return (
           <Icon
-            onPress={() => navigation.navigate('Account')}
+            onPress={() => {
+              if (adLoaded) {
+                show();
+              } else {
+                navigation.navigate('Account');
+              }
+            } }
             name="account"
             size={30}
             color={colors.main}
